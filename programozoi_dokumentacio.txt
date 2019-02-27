@@ -1,0 +1,85 @@
+STACK - Programozói dokumentáció
+--------------------------------
+
+Megvalósítások módszere és használt adatszerkezet:
+--
+1. Program indulásakor a main() meghívja a fomenu()-t, ami kirajzolja a menüpontokat és itt tudunk választani is. Majd a választással visszatér a main()-be és annak megfelelõen hívja meg a következõ menüpontot.
+2. Maga a játék egy táblából áll, ami ki van töltve mezõkkel. Ennek megvalósítása egy dinamikusan foglalt (nehézségtõl függõen) kétdimenziós tömb, aminek típusa egy struktúra. A tömbnek egy elem tárolja egy mezõ minden szükséges információját: táblán a pozíciója (x,y), alatta található szám, nyitva van-e. Egy mezõ 4x3 karakter méretû és ehhez mérten számolja ki a pozícióját adott pálya mérethez. A számok pedig véletlenszerûen vannak kiválasztva 2-9 és minusz 2-9 közül.
+3. Idõ számítása: Játék indulásakor egy változóba elmentjük az aktuális idõt és egy függvény megmondja, hogy mennyi idõ telt el azóta, majd a maximum idõbõl levonja azt.
+4. Nehézség menüben, amikor kiválasztunk egy nehézséget, eltárolja azt egy változóban. Majd a main() ezzel a paraméterrel hívja meg a játék függvényét. Így a játék a paraméternek megfelelõen állítja fel az értékeket a nehézséghez.
+5. A toplista a top.txt fájlból dolgozik. Ez tartalmazza a pontszámokat és a hozzátartozó neveket. Ezeket egy struktúra tömbben tárolja, ami globális, ugyanis ezt több menübõl is el kell tudnunk érni (játékból és a toplista menübõl is). Beolvassa a tömbbe az adatokat. Megjeleníti azokat a toplista menüben vagy elvégzi a szükséges módosításokat, ha szükséges és visszamenti a top.txt fájlba.
+
+
+Modulok:
+--
+Az egész programot fõleg menük szerint bontottam modulokra.
+1. main.c - Ez hívja meg a különbözõ menüket és ez tartalmazza a fõmenût is.
+2. jatek.c - Tartalmazza az összes függvényt, ami szükséges a játékhoz. Mindent kezel, ami a játékkal kapcsolatos és a játék végén visszatér a main()-be.
+3. nehezseg.c - Kirajzolja a nehézség menü opcióit és a választásunkat visszaadja a main()-nek.
+4. toplista.c - Ebben van minden szükséges függvény, ami kell a toplista tömbjének és fájljának kezeléséhez.
+5. felirat.c - Információkat ír ki a játék során és tartalmazza a játék logóját, ami minden menüben megjelenik.
+6. econio.c - Képernyõkezelési függvényeket tartalmaz.
+
+
+Fontosabb függvények magyarázata:
+--
+void jatek_indit (nehezseg_opcio nehezs):
+Paraméterként kapja a választott nehézséget. Ez a függvény kezeli le az egész játékot az elejétõl a végéig. Függvény elején a szükséges változókat deklarálja és inicializálja. Lefoglalja a mezõk tömbjét és feltölti az adatokkal. Ezután kirajzolja a mezõket, köré egy négyzetet (keret), információkat, és a logót. A játék egy állandó while ciklusban folyik és így kéri le állandóan a hátralévõ idõt. Közben a lépéseket is érzékeli és azok szerint cselekszik. Ha jön olyan esemény, ami megszünteti a játékot, akkor break-el a ciklusból. Felszabadítja a dinamikusan foglalt tömböt. Majd a pontszámtól függõen csak kiírja a pontszámunkat vagy ad lehetõséget, hogy beleírjuk a pontszámot a toplistába.
+
+void szamok_foglal (mezo*** tomb, int magas, int szeles):
+Megkapja a tömb pointerét és a mezõk magasságát, illetve szélességét. Kettõ szorzata kiadja a mezõk számát.
+Annyit csinál, hogy malloc() használatával lefoglalja a tömböt.
+
+void szamok_feltolt (mezo **tomb, int mmag, int mszel, int mag, int szel):
+Feltölti a tömböt a mezõk adataival. Paraméterek ahhoz kellenek, hogy tudjuk meddig kell menni a for ciklussal.
+Kiszámolja a mezõk pozícióit, véletlenszerû számot kapnak, és a nyitva változót false-ra állítja.
+
+void szamok_modosit (mezo **tomb, int magas, int szeles, int elozo, int mostani):
+Megkapja a tömb szükséges paramétereit, az elõzõ és a mostani lépés alatti számot.
+Ezek segítségével módosítja a mezõk számát a szabály szerint.
+
+void negyzet_rajzol(int mag, int szel, int kezdmag, int kezdszel):
+Kirajzol egy négyzetet. Paraméterei: négyzet mérete (x,y) és kezdõpozíciója (x,y).
+
+void mezo_rajzol (mezo m):
+Egyetlen mezõt rajzol ki. Ha a nyitva true, akkor mutatja a számot, ha false, akkor elrejti.
+Paramétere egy mezõ struktúrája.
+
+void mezo_kinyit (mezo *m, int *pont, int *elozo, int *mostani, int *nyitas):
+Kinyitja a mezõt, pontszámot hozzáadja a meglévõ pontszámunkhoz.
+Ez a függvény kezeli az elõzõ és mostani nyitásokat is.
+
+void szamok_rajzol (mezo **tomb, int mmag, int mszel):
+A mezo_rajzol() segítségével kirajzolja a tömb összes mezõjét.
+
+bool palya_hatar(char c, int y, int x, int mmag, int mszel):
+Paraméterek: c-merre szeretnénk menni, x,y-aktuális pozíció, a többi a pálya mérete.
+Megmondja, hogy a pálya szélén vagyunk-e.
+
+void ido (int max, time_t start, int *hatralevo):
+Paraméterek szerint megmondja, hogy mennyi idõ van még hátra.
+A max a maximum idõ, amit a nehézségtõl függõen állít be.
+A start a kezdeti idõ, ami mentésre került egy változóba a játék kezdetekor.
+Majd a harmadik paraméter egy pointer, ott adja vissza az eredményt.
+
+void toplista_olvas(void):
+A toplista tömböt kitölti üres értékekkel, majd beolvassa a fájlból az adatokat a tömbbe.
+
+void toplista_ment(void):
+Végigmegy a tömbön és ahol nem üres értékek vannak, azt beleírja a fájlba.
+
+void toplista_rendez(void):
+Rendezi a toplista tömböt pontszám szerint csökkenõ sorrendbe.
+
+int toplista_min(void):
+Megkeresi a minimum pontszámot a toplista tömbben. Ezt használja a játék végén, amikor el kell dönteni, hogy az elért pontszám alkalmas-e, hogy beleírjuk a toplistába.
+
+void toplista_hozzaad(int pont):
+Megkapja paraméterként az elért pontszámot. Beolvassa a nevet, elvégzi a szükséges string átalakításokat.
+Majd a pontszámot és nevet beleírja a toplista tömb végére.
+Rendezi a tömböt és elmenti a fájlba.
+
+bool toplista_kiir(void):
+Kilistázza a toplista tömb tartalmát.
+Billentyû-lenyomásra azt adja vissza a main()-nek, hogy ki akarunk-e lépni a toplistából.
+Ez minden esetben false, kivéve amikor ESC-et nyomunk, olyankor true-t ad vissza.

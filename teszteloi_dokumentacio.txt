@@ -1,0 +1,41 @@
+STACK - Tesztelõi dokumentáció
+------------------------------
+
+Az egész program során mûködik a vezérlés a kiírt módon, végig lett próbálva az összes.
+
+A játék 4 menüpontot tartalmaz, melyeket külön-külön mutatok be tesztelési szempontból:
+
+1. Játék indítása (maga a játék):
+- Nyilakkal mûködik a mozgás minden irányban.
+- Falnak ütközéskor sem tapasztalhatunk abnormális viselkedést, nem tudunk kilépni a pályáról.
+- Pontszámok növekedését és a rejtett számok elõjelének változását szemmel követtem végig ideiglenesen végig nyitott mezõkkel. Minden a tervek szerint mûködik.
+- Játéknak 3-féle eseménnyel lehet vége, melyek ki lettek próbálva: ESC megnyomására, ha lejár az idõ, vagy ha elfogynak a fennálló lépések
+- A pálya mellett megjelenõ szövegek mind helyes információt mutatnak.
+- Játék végén megvizsgálja a program, hogy alkalmas-e a pontszámunk, hogy bekerüljön a toplistába (legalább a 10. hely pontszámát el kell érni). Ha ez teljesül, akkor be tudunk írni egy nevet a pontszám mellé (errõl késõbb). Ha pedig nem alkalmas, akkor csak kiírja az elért pontszámunkat és 2 másodperc múlva visszakerülünk a fõmenübe.
+Ez tesztelve lett kisebb pontszámmal, pont akkora pontszámmal, és nagyobb pontszámmal, mint az utolsó 10. helyen álló pontszám.
+Amikor meg tudjuk adni a nevünket a pontszám mellé maximum 10 karaktert fogad el a gép:
+Ha nem írunk be semmit és entert nyomunk, akkor a név helyére *Nevtelen* kerül.
+Ha pont 10 vagy kevesebb karaktert írunk be, akkor elmenti azt, amit beírtunk.
+Ha több, mint 10 karaktert írunk be, akkor csak az elsõ 10 karaktert menti el.
+Ha szóköz is kerül a névbe, akkor azt kivágja belõle.
+
+2. Nehézség választása:
+- Ennél megvizsgáltam, hogy mûködnek-e a változások, melyeket ezek elõidéznek.
+Kiválasztáskor 3 opciónk van: könnyû, közepes (alapértelmezett), nehéz. Ezek a pálya méretére és a fennálló idõre vannak hatással, valamint a fennálló nyitások számára is ez mindig a mezõk számának 60%-a.
+Mindhárom opciót kipróbálva mûködnek a nehézségek. Változik a pálya mérete, az idõ, valamint a lépések száma is.
+- Ha megnyitjuk a programot, és nem állítunk nehézséget, akkor közepes nehézséggel indul el a játék, mert ez az alapértelmezett.
+- A nehézség menüben van egy 4. opció, amivel vissza tudunk lépni a fõmenübe (ESC). Ez nem befolyásolja a nehézség választását, ha nem választunk semmit, akkor marad az utoljára választott nehézség.
+
+3. Toplista:
+Ez a menü beolvassa egy tömbbe a 10 pontszámot és a neveket hozzá egy szövegfájlból, majd kiírja azokat csökkenõbe rendezve pontszám szerint.
+- Ha a fájlban több, mint 10 elem van, akkor csak az elsõ 10-et olvassa be.
+- Ha nincs vagy üres a fájl, akkor a 10 helyre *ures* kerül.
+- Ha nincs tele a fájl, akkor kiírja pontszámokat nevekkel, a fennmaradó helyre pedig *ures* kerül.
+
+4. Kilépés:
+A fõmenüben ESC gombnyomásra bezárja a programot, egyéb esetekben visszalép a fõmenübe.
+Az ESC mindenesetben használható, kivéve amikor a nevünket kell megadni játék végén. Ilyenkor ha nem szeretnénk nevet megadni, akkor üresen hagyjuk és entert nyomunk, ESC-re nem reagál.
+
+Egyéb:
+Ezenkívül minden egyéb apróság úgy néz ki / úgy mûködik, ahogy az ki lett találva.
+A színezések, elrendezések, a játék logója mind megfelelõen jelenik meg.

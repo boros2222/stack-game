@@ -1,0 +1,32 @@
+STACK - Felhasználói dokumentáció
+---------------------------------
+
+Játékszabály:
+A Stack nevû játék arról szól, hogy van egy tábla, ami ki van töltve mezõkkel. A mezõk alatt elõjeles számok vannak, melyeket kezdetben nem láthatunk.
+Mezõk között nyílakkal tudunk lépegetni és az enterrel tudjuk megnézni a pontszámunkat. Ilyenkor a mezõ alatti szám hozzáadódik a pontszámunkhoz. A játék célja, hogy minél több pontszámot gyüjtsünk össze a megadott idõ alatt, vagy pedig a mezõk számának 60%-ának kinyitásával. ESC gombot megnyomva pedig be tudjuk fejezni a játékot.
+A játék azonban nem ilyen egyszerû. Ugyanis ha már volt legalább 2 lépésünk, akkor a többi rejtett szám elõjele változhat a legutóbbi két lépésünk alapján.
+Ilyenkor megvizsgálja az utolsó két nyitásunk számának elõjelét és a következõ szabály szerint módosítja a többi rejtett szám elõjelét:
+Legyen K = a két szám összege elosztva 2-vel egészként.
+Minden K-dik mezõk elõjele változik az utolsó két szám elõjele szerint (számít a két szám sorrendje, nyitási sorrendben értendõ):
+- Ha az utolsó két szám elõjele pozitív és negatív, akkor pozitív-ra változik.
+- Ha az utolsó két szám elõjele negatív és negatív, akkor pozitív-ra változik.
+- Ha az utolsó két szám elõjele negatív és pozitív, akkor negatív-ra változik.
+- Ha az utolsó két szám elõjele pozitív és pozitív, akkor negatív-ra változik.
+Amennyiben ügyesen követjük a mezõk változását, kitalálhatjuk a mely mezõk alatt lakoznak pozitív számok, hogy minél több pontszámunk lehessen.
+A szabályok egyébként megtalálhatók egész játék alatt a pálya mellett, hogy ne kelljen megjegyeznünk azt.
+Továbbá egyéb információkat is találhatunk itt, mint például a pontszámunk, hátralévõ idõ és a hátralévõ nyitások száma.
+
+Menük:
+Ha elindítjuk a programot 4 opció vár bennünket.
+- 1. Játék indítása:
+Ezt kiválasztva elindítja a játékot az alapértelmezett beállítással (közepes nehézség).
+- 2. Nehézség kiválasztása:
+Ebben a menüben ki tudjuk választani a játék nehézségét.
+* Könnyû: 8x5-ös pálya és 5 perc áll rendelkezésre.
+* Közepes: 10x6-os pálya és 10 perc áll rendelkezésre.
+* Nehéz: 15x7-es pálya és 15 perc áll rendelkezésre.
+- 3. Toplista:
+Itt meg tudjuk tekinteni a legjobb 10 elért pontszámot - ha van - nevekkel.
+Ha játékunk során elérjük legalább a toplista 10. pontszámát, akkor azt felülírhatjuk a sajátunkkal.
+Ilyenkor meg tudjuk adni a nevünket, illetve üresen is hagyhatjuk, ha névtelenül szeretnénk elmenteni a pontszámunkat.
+- 4. Kilépés a játékból ESC gombnyomásra
